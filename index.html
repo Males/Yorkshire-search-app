@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yorkshire Product Search</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.css@8/themes/satellite-min.css" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 2rem;
+        background-color: #f9f9f9;
+      }
+      .hit-name {
+        font-weight: bold;
+        font-size: 1.2rem;
+      }
+      .hit-price {
+        color: #00754a;
+        font-weight: bold;
+      }
+      .hit-image img {
+        max-width: 100px;
+        border-radius: 8px;
+      }
+      .hit {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        padding: 1rem;
+        background: white;
+        margin-bottom: 1rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Search Yorkshire Products</h1>
+
+    <div id="searchbox"></div>
+    <div id="hits"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4"></script>
+    <script>
+      const search = instantsearch({
+        indexName: 'yorkshire_products',
+        searchClient: algoliasearch(
+          'FML7BRCVZD',
+          'aa34ec43484c44d55f6830545f1a47c1'
+        ),
+      });
+
+      search.addWidgets([
+        instantsearch.widgets.searchBox({
+          container: '#searchbox',
+          placeholder: 'Search for a product...'
+        }),
+
+        instantsearch.widgets.hits({
+          container: '#hits',
+          templates: {
+            item(hit) {
+              return `
+                <div class="hit">
+                  <div class="hit-image">
+                    <img src="${hit.image_url}" alt="${hit.product_name}" />
+                  </div>
+                  <div>
+                    <div class="hit-name">${hit._highlightResult.product_name.value}</div>
+                    <div>${hit._highlightResult.description?.value || ''}</div>
+                    <div class="hit-price">£${hit.price}</div>
+                  </div>
+                </div>
+              `;
+            },
+          },
+        })
+      ]);
+
+      search.start();
+    </script>
+  </body>
+</html>
