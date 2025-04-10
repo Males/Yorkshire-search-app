@@ -41,8 +41,10 @@
     <div id="searchbox"></div>
     <div id="hits"></div>
 
+    <!-- Make sure algoliasearch is loaded BEFORE your main script -->
     <script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.14.2/dist/algoliasearch-lite.umd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.56.1"></script>
+
     <script>
       document.addEventListener('DOMContentLoaded', function () {
         const search = instantsearch({
