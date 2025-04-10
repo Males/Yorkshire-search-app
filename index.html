@@ -41,44 +41,47 @@
     <div id="searchbox"></div>
     <div id="hits"></div>
 
-    <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.14.2/dist/algoliasearch-lite.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.56.1"></script>
     <script>
-      const search = instantsearch({
-        indexName: 'yorkshire_products',
-        searchClient: algoliasearch(
-          'FML7BRCVZD',
-          'aa34ec43484c44d55f6830545f1a47c1'
-        ),
-      });
+      document.addEventListener('DOMContentLoaded', function () {
+        const search = instantsearch({
+          indexName: 'yorkshire_products',
+          searchClient: algoliasearch(
+            'FML7BRCVZD',
+            'aa34ec43484c44d55f6830545f1a47c1'
+          ),
+        });
 
-      search.addWidgets([
-        instantsearch.widgets.searchBox({
-          container: '#searchbox',
-          placeholder: 'Search for a product...'
-        }),
+        search.addWidgets([
+          instantsearch.widgets.searchBox({
+            container: '#searchbox',
+            placeholder: 'Search for a product...'
+          }),
 
-        instantsearch.widgets.hits({
-          container: '#hits',
-          templates: {
-            item(hit) {
-              return `
-                <div class="hit">
-                  <div class="hit-image">
-                    <img src="${hit.image_url}" alt="${hit.product_name}" />
+          instantsearch.widgets.hits({
+            container: '#hits',
+            templates: {
+              item(hit) {
+                return `
+                  <div class="hit">
+                    <div class="hit-image">
+                      <img src="${hit.image_url}" alt="${hit.product_name}" />
+                    </div>
+                    <div>
+                      <div class="hit-name">${hit._highlightResult.product_name.value}</div>
+                      <div>${hit._highlightResult.description?.value || ''}</div>
+                      <div class="hit-price">£${hit.price}</div>
+                    </div>
                   </div>
-                  <div>
-                    <div class="hit-name">${hit._highlightResult.product_name.value}</div>
-                    <div>${hit._highlightResult.description?.value || ''}</div>
-                    <div class="hit-price">£${hit.price}</div>
-                  </div>
-                </div>
-              `;
+                `;
+              },
             },
-          },
-        })
-      ]);
+          })
+        ]);
 
-      search.start();
+        search.start();
+      });
     </script>
   </body>
 </html>
