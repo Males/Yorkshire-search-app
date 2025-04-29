@@ -1,0 +1,21 @@
+<h1>Yorkshire Products API Documentation</h1>
+<p>Welcome to the official documentation for the Yorkshire Products API.</p>
+
+<h2>Getting Started</h2>
+<p>To use the API, first obtain an API key by contacting <code>tea@properbrew.co.uk</code>.</p>
+
+<h2>Authentication</h2>
+<p>Authenticate every request by including the API key in a header: <code>X-Yorkshire-Auth-Key</code>.</p>
+
+<h2>Endpoints</h2>
+<ul>
+<li><code>GET /api/v1/pies</code> – Returns all available pies.</li>
+<li><code>POST /api/v1/brew</code> – Starts a brew cycle for a cuppa.</li>
+<li><code>GET /api/v1/whippets</code> – Lists local whippets available for delivery.</li>
+</ul>
+
+<h2>Examples</h2>
+<pre>
+GET https://yorkshireproducts.co.uk/api/v1/pies
+Headers: { "X-Yorkshire-Auth-Key": "YOUR_API_KEY" }
+</pre>
